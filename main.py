@@ -1,20 +1,21 @@
+# Code for 'main_app.py' file.
+# Importing the necessary Python modules.
 import streamlit as st
 import numpy as np
 import pandas as pd
+
+# Import the individual Python files
 import home
 import data
 import plots
 import predict
-# Configure your home page.
+
+# Configure your home page by setting its title and icon that will be displayed in a browser tab.
 st.set_page_config(page_title = 'Car Price Prediction',
                     page_icon = ':car:',
                     layout = 'centered',
                     initial_sidebar_state = 'auto'
                     )
-# S3.1: Create a function, say, 'load_data()' in the 'main_app.py' file to load the dataset.
-
-# Importing the necessary Python modules.
-
 
 # Dictionary containing positive integers in the form of words as keys and corresponding former as values.
 words_dict = {"two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "eight": 8, "twelve": 12}
@@ -59,10 +60,9 @@ def load_data():
     return cars_df[final_columns]
 
 final_cars_df = load_data()
-# S4.1: Adding a navigation in the sidebar using radio buttons
-# Import the individual Python files
 
-# create a dictionary 'pages_dict'
+# Adding a navigation in the sidebar using radio buttons.
+# Create a dictionary.
 pages_dict = {
                 "Home": home,
                 "View Data": data,
@@ -70,13 +70,16 @@ pages_dict = {
                 "Predict": predict
             }
 
-# Add radio buttons in the sidebar for navigation and call the respective pages based on 'user_choice'.
+# Add radio buttons in the sidebar for navigation and call the respective pages based on user selection.
 st.sidebar.title('Navigation')
 user_choice = st.sidebar.radio("Go to", tuple(pages_dict.keys()))
 if user_choice == "Home":
-    home.app() # The 'app()' function should not take any input if the selection option is "Home".
+    home.app()
 else:
     selected_page = pages_dict[user_choice]
     selected_page.app(final_cars_df)
-
-
+# This 'app()' function is defined in all the 'home.py', data.py', 'plots.py' and 'predict.py' files.
+# Whichever option out of "View Data", "Visualise Data" and "Predict" a user selects, that option gets stored in the
+# 'selection' variable and the correspoding value to that key gets stored in the 'page' variable and then the 'app()'
+# function gets called from that Python file
+# which could be either of 'home.py', 'data.py', 'plots.py' and 'predict.py' files in this case.
